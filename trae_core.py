@@ -766,7 +766,11 @@ def from_env_accounts():
     if not raw:
         return []
     try:
-        return _accounts_from(json.loads(raw), "TRAE_ACCOUNTS")
+        # return _accounts_from(json.loads(raw), "TRAE_ACCOUNTS")
+        parsed_obj = json.loads(raw)
+        account_list = parsed_obj.get("accounts", [])
+        return _accounts_from(account_list, "TRAE_ACCOUNTS")
+    
     except Exception as e:                       # noqa: BLE001
         print("❌ [配置] TRAE_ACCOUNTS 不是合法 JSON: %s" % e)
         return []
